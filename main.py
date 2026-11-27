@@ -5,6 +5,7 @@ from constants import SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_RADIUS, LINE_WIDTH
 from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
+from score import Score
 from shot import Shot
 
 def main():
@@ -33,6 +34,10 @@ def main():
     # passing on the group to the Shot class
     Shot.containers = (shots, updatable, drawable)
     
+    # scoreboard
+    score = Score()
+    font = pygame.font.Font(None, 36)
+    
     # the actual player
     player = Player(x = (SCREEN_WIDTH / 2), y = (SCREEN_HEIGHT / 2))
     # the actual asteroid field
@@ -44,6 +49,8 @@ def main():
                 return
         log_state()
         screen.fill("black")
+        score_surface = font.render(f"Score: {score.get_score()}", True, (255, 255, 255))
+        screen.blit(score_surface, (10, 10))  # Draw directly at (x=10, y=10)
         for sprite in drawable:
             sprite.draw(screen=screen)
         pygame.display.flip()
@@ -53,12 +60,14 @@ def main():
             if asteroid.collides_with(player):
                 log_event("player_hit")
                 print("Game over!")
+                print(f"Total points: {score.get_score()}")
                 sys.exit()
             for shot in shots:
                 if asteroid.collides_with(shot):
                     log_event("asteroid_shot")
                     asteroid.split()
                     shot.kill()
+                    score.add_score()
                 
 
 if __name__ == "__main__":

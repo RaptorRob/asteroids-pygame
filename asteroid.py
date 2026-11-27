@@ -37,6 +37,6 @@ class Asteroid(CircleShape):
         rotate_vector2 = self.velocity.rotate(random_angle * -1)
         new_radius = self.radius - ASTEROID_MIN_RADIUS
         asteroid_1 = Asteroid(x = self.position.x, y = self.position.y, radius = new_radius, color= "blue")
-        asteroid_2 = Asteroid(x = self.position.x, y = self.position.y, radius = new_radius, color= "green")
+        asteroid_2 = Asteroid(x = self.position.x, y = self.position.y, radius = new_radius, color= "orange")
         asteroid_1.velocity = rotate_vector1 * 1.2
         asteroid_2.velocity = rotate_vector2 * 1.2
